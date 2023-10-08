@@ -1,6 +1,5 @@
 package com.bengkel.booking.services;
 
-import com.bengkel.booking.models.Customer;
 import com.bengkel.booking.models.ItemService;
 import com.bengkel.booking.models.Vehicle;
 

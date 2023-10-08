@@ -2,6 +2,7 @@ package com.bengkel.booking.services;
 
 import java.util.List;
 
+import com.bengkel.booking.models.BookingOrder;
 import com.bengkel.booking.models.Car;
 import com.bengkel.booking.models.ItemService;
 import com.bengkel.booking.models.Vehicle;
@@ -52,7 +53,6 @@ public class PrintService {
 
 	}
 
-
 	public static void showAllServices(String title, List<ItemService> listServices) {
 		int number = 1;
 		String formatTable = "| %-4s | %-14s | %-15s | %-15s | %-10s | %n";
@@ -68,6 +68,29 @@ public class PrintService {
 		System.out.println("=========================================================================");
 
 	}
-	//Silahkan Tambahkan function print sesuai dengan kebutuhan.
-	
+
+	public static void showAllBookingInformation(String title, List<BookingOrder> listBookingOrder) {
+		int number = 1;
+		String formatTable = "| %-4s | %-15s | %-15s | %-15s | %-14s | %-14s | %-30s | %n";
+		System.out.println("=================================================================================================================================");
+		System.out.format("| %-125s | %n", title);
+		System.out.println("=================================================================================================================================");
+		System.out.printf(formatTable, "No", "Booking ID", "Nama Customer", "Payment Method", "Total Service", "Total Payment", "List Service");
+		System.out.println("=================================================================================================================================");
+		for (BookingOrder order : listBookingOrder) {
+			System.out.format(formatTable, number, order.getBookingId(), order.getCustomer().getName(), order.getPaymentMethod(), Util.formatCurrency(order.getTotalServicePrice()), Util.formatCurrency(order.getTotalPayment()), printServices(order.getServices()));
+			number++;
+		}
+		System.out.println("=================================================================================================================================");
+
+	}
+
+	public static String printServices(List<ItemService> serviceList){
+		String result = "";
+		for (ItemService service : serviceList) {
+			result += service.getServiceName() + ", ";
+		}
+		return result;
+	}
+
 }

@@ -3,14 +3,11 @@ package com.bengkel.booking.services;
 import com.bengkel.booking.models.*;
 import com.bengkel.booking.util.Util;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Stream;
+
 
 public class BengkelService {
-  private static Scanner input = new Scanner(System.in);
   public static int numberOfError = 0;
 	//Silahkan tambahkan fitur-fitur utama aplikasi disini
 	
