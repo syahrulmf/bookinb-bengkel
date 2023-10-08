@@ -27,24 +27,27 @@ public class PrintService {
 		System.out.println("==========================================================");
 	}
 	
-	public static void printVechicle(List<Vehicle> listVehicle) {
-		String formatTable = "| %-2s | %-15s | %-10s | %-15s | %-15s | %-5s | %-15s |%n";
-		String line = "+----+-----------------+------------+-----------------+-----------------+-------+-----------------+%n";
-		System.out.format(line);
-	    System.out.format(formatTable, "No", "Vechicle Id", "Warna", "Brand", "Transmisi", "Tahun", "Tipe Kendaraan");
-	    System.out.format(line);
-	    int number = 1;
-	    String vehicleType = "";
-	    for (Vehicle vehicle : listVehicle) {
-	    	if (vehicle instanceof Car) {
-				vehicleType = "Mobil";
+	public static void printVechicle(String title, List<Vehicle> listVehicle) {
+		int number = 1;
+		String formatTable = "| %-4s | %-12s | %-10s | %-15s | %-8s | %n";
+		System.out.println("=================================================================");
+		System.out.format("| %-61s | %n", title);
+		System.out.println("=================================================================");
+		System.out.printf(formatTable, "No", "Vehicle ID", "Warna", "Tipe Kendaraan", "Tahun");
+		System.out.println("=================================================================");
+		String vehicleType = "";
+		for (Vehicle vehicle : listVehicle) {
+			if (vehicle instanceof Car) {
+				vehicleType = "Car";
 			}else {
-				vehicleType = "Motor";
+				vehicleType = "Motocycle";
 			}
-	    	System.out.format(formatTable, number, vehicle.getVehiclesId(), vehicle.getColor(), vehicle.getBrand(), vehicle.getTransmisionType(), vehicle.getYearRelease(), vehicleType);
-	    	number++;
-	    }
-	    System.out.printf(line);
+			System.out.format(formatTable, number, vehicle.getVehiclesId(), vehicle.getColor(), vehicleType, vehicle.getYearRelease());
+			number++;
+		}
+		System.out.println("=================================================================");
+
+
 	}
 	
 	//Silahkan Tambahkan function print sesuai dengan kebutuhan.

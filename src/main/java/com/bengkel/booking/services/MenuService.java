@@ -12,7 +12,7 @@ import com.bengkel.booking.repositories.ItemServiceRepository;
 public class MenuService {
 	public static List<Customer> listAllCustomers = CustomerRepository.getAllCustomer();
 	public static List<ItemService> listAllItemService = ItemServiceRepository.getAllItemService();
-	public static List<Customer> customerLoggedIn = new ArrayList<>();
+	public static Customer customerLoggedIn = new Customer();
 	private static Scanner input = new Scanner(System.in);
 
 	public static void run() {
@@ -59,6 +59,8 @@ public class MenuService {
 			switch (menuChoice) {
 			case 1:
 				//panggil fitur Informasi Customer
+				BengkelService.getInfoCustomer();
+				isLooping = Validation.validateMenu("Inputkan 0 untuk kembali ke menu: ");
 				break;
 			case 2:
 				//panggil fitur Booking Bengkel
@@ -69,8 +71,13 @@ public class MenuService {
 			case 4:
 				//panggil fitur Informasi Booking Order
 				break;
+			case 0:
+				System.out.println("\nLogout\n");
+				isLooping = false;
+				customerLoggedIn = null;
+				break;
 			default:
-				System.out.println("Logout");
+				System.out.println("Input tidak dimengerti");
 				isLooping = false;
 				break;
 			}

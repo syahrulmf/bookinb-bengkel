@@ -5,6 +5,9 @@ import com.bengkel.booking.models.Customer;
 import java.util.Scanner;
 
 public class Validation {
+	public static String regexNumber = "^[0-9]+$";
+	public static String regexHuruf = "^[a-zA-Z ]+$";
+	public static String regexID = "^[A-Za-z0-9\\-]+$";
 
 	public static String validasiInput(String question, String errorMessage, String regex) {
 		Scanner input = new Scanner(System.in);
@@ -41,25 +44,14 @@ public class Validation {
 		return result;
 	}
 
-//  public static String validasiCustomerId(String question, String errorMessage, String regex) {
-//    String input;
-//    boolean isLooping = true;
-//
-//    do {
-//      input = validasiInput(question, errorMessage, regex);
-//      Customer dataCustomer = BengkelService.getCustomerById(input);
-//      if (dataCustomer != null) {
-//        isLooping = false;
-//      } else {
-//        System.out.println(errorMessage);
-//				BengkelService.numberOfError++;
-//      }
-//    } while (isLooping);
-//
-//    return input;
-//  }
+	public static boolean validateMenu(String question) {
+		boolean isLooping = false;
 
-//	public static void validasiLogin(String customerID, String password) {
-//
-//	}
+		int pilihan = validasiNumberWithRange(question, "Hanya menerima inputan angka 0!", regexNumber, 0, 0);
+		if (pilihan == 0) {
+			isLooping = true;
+		}
+
+		return isLooping;
+	}
 }

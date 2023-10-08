@@ -2,16 +2,13 @@ package com.bengkel.booking.services;
 
 import com.bengkel.booking.models.Customer;
 import com.bengkel.booking.models.MemberCustomer;
+import com.bengkel.booking.util.Util;
 
 import java.util.Scanner;
 
 public class BengkelService {
   private static Scanner input = new Scanner(System.in);
   public static int numberOfError = 0;
-  public static String regexNumber = "^[0-9]+$";
-  public static String regexHuruf = "^[a-zA-Z ]+$";
-  public static String regexID = "^[A-Za-z0-9\\-]+$";
-	
 	//Silahkan tambahkan fitur-fitur utama aplikasi disini
 	
 	//Login
@@ -20,8 +17,8 @@ public class BengkelService {
     boolean isLooping = true;
 
     do {
-      String customerID = Validation.validasiInput("Masukan Customer ID: ", "Customer ID tidak ditemukan atau salah!", regexID);
-      String password = Validation.validasiInput("Masukan Password: ", "Password yang anda masukan salah!", regexID);
+      String customerID = Validation.validasiInput("Masukan Customer ID: ", "Customer ID tidak ditemukan atau salah!", Validation.regexID);
+      String password = Validation.validasiInput("Masukan Password: ", "Password yang anda masukan salah!", Validation.regexID);
       Customer dataCustomer = getCustomerById(customerID);
 
       if (dataCustomer != null) {
@@ -32,7 +29,7 @@ public class BengkelService {
           System.out.println("\nPassword yang anda masukan salah\n");
           numberOfError++;
         } else {
-          MenuService.customerLoggedIn.add(dataCustomer);
+          MenuService.customerLoggedIn = dataCustomer;
           isLogin = true;
           isLooping = false;
         }
@@ -41,7 +38,7 @@ public class BengkelService {
         numberOfError++;
       }
 
-      if (numberOfError < 3) {
+      if (numberOfError == 3) {
         isLogin = false;
         isLooping = false;
         System.out.println("\nAnda telah gagal Login sebanyak 3x, Sistem dihentikan!\n");
@@ -60,6 +57,21 @@ public class BengkelService {
   }
 	
 	//Info Customer
+  public static void getInfoCustomer() {
+    Customer customer = MenuService.customerLoggedIn;
+    String member = customer instanceof MemberCustomer ? "Member" : "Non Member";
+    System.out.println(member);
+    System.out.println("Customer Profile");
+    System.out.println("Customer ID     : " + customer.getCustomerId());
+    System.out.println("Nama            : " + customer.getName());
+    System.out.println("Customer Status : " + member);
+    System.out.println("Alamat          : " + customer.getAddress());
+    if (customer instanceof MemberCustomer) {
+      System.out.println("Saldo Coin      : " + Util.formatCurrency(((MemberCustomer)customer).getSaldoCoin()));
+    }
+    System.out.println();
+    PrintService.printVechicle("List Kendaraan", customer.getVehicles());
+  }
 	
 	//Booking atau Reservation
 	
