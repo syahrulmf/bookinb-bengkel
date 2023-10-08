@@ -1,5 +1,6 @@
 package com.bengkel.booking.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,20 +10,40 @@ import com.bengkel.booking.repositories.CustomerRepository;
 import com.bengkel.booking.repositories.ItemServiceRepository;
 
 public class MenuService {
-	private static List<Customer> listAllCustomers = CustomerRepository.getAllCustomer();
-	private static List<ItemService> listAllItemService = ItemServiceRepository.getAllItemService();
+	public static List<Customer> listAllCustomers = CustomerRepository.getAllCustomer();
+	public static List<ItemService> listAllItemService = ItemServiceRepository.getAllItemService();
+	public static List<Customer> customerLoggedIn = new ArrayList<>();
 	private static Scanner input = new Scanner(System.in);
+
 	public static void run() {
+		String[] listMenu = {"Login", "Exit"};
 		boolean isLooping = true;
+		int menuChoice = 0;
+
 		do {
-			login();
-			mainMenu();
+			PrintService.printMenu("Aplikasi Booking Bengkel", listMenu);
+			menuChoice = Validation.validasiNumberWithRange("Masukan Pilihan Menu: ", "Input Harus Berupa Angka!", "^[0-9]+$", listMenu.length-1, 0);
+
+			switch (menuChoice) {
+				case 1:
+					login();
+					break;
+				case 0:
+					isLooping = false;
+					break;
+			}
 		} while (isLooping);
 		
 	}
 	
 	public static void login() {
-		
+
+			boolean isLogin = BengkelService.loginService();
+			if (isLogin) {
+				System.out.println("\nAnda Berhasil Login\n");
+				mainMenu();
+			}
+
 	}
 	
 	public static void mainMenu() {
@@ -31,7 +52,7 @@ public class MenuService {
 		boolean isLooping = true;
 		
 		do {
-			PrintService.printMenu(listMenu, "Booking Bengkel Menu");
+			PrintService.printMenu( "Booking Bengkel Menu", listMenu);
 			menuChoice = Validation.validasiNumberWithRange("Masukan Pilihan Menu:", "Input Harus Berupa Angka!", "^[0-9]+$", listMenu.length-1, 0);
 			System.out.println(menuChoice);
 			

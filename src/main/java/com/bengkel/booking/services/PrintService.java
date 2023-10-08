@@ -6,25 +6,25 @@ import com.bengkel.booking.models.Car;
 import com.bengkel.booking.models.Vehicle;
 
 public class PrintService {
-	
-	public static void printMenu(String[] listMenu, String title) {
-		String line = "+---------------------------------+";
+
+	public static void printMenu(String title, String[] listMenu) {
 		int number = 1;
-		String formatTable = " %-2s. %-25s %n";
-		
-		System.out.printf("%-25s %n", title);
-		System.out.println(line);
-		
-		for (String data : listMenu) {
-			if (number < listMenu.length) {
-				System.out.printf(formatTable, number, data);
+		String formatTabel = "| %-3s | %-48s |%n";
+		System.out.println(title);
+		System.out.println("==========================================================");
+		System.out.printf(formatTabel, "No", "Menu");
+		System.out.println("==========================================================");
+
+		for (String menu : listMenu) {
+			if (number == listMenu.length) {
+				System.out.printf(formatTabel, 0, menu);
 			}else {
-				System.out.printf(formatTable, 0, data);
+				System.out.printf(formatTabel, number, menu);
 			}
 			number++;
 		}
-		System.out.println(line);
-		System.out.println();
+
+		System.out.println("==========================================================");
 	}
 	
 	public static void printVechicle(List<Vehicle> listVehicle) {
