@@ -9,4 +9,10 @@ public class Util {
     return df.format(saldo);
   }
 
+  private static int bookingNumber = 1;
+
+  public static String generateBookingId() {
+    return "Rsv-" + String.format("%03d", bookingNumber++);
+  }
+
 }

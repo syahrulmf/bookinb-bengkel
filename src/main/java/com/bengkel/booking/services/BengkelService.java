@@ -1,10 +1,13 @@
 package com.bengkel.booking.services;
 
-import com.bengkel.booking.models.Customer;
-import com.bengkel.booking.models.MemberCustomer;
+import com.bengkel.booking.models.*;
 import com.bengkel.booking.util.Util;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class BengkelService {
   private static Scanner input = new Scanner(System.in);
@@ -74,6 +77,65 @@ public class BengkelService {
   }
 	
 	//Booking atau Reservation
+  public static void bookingBengkel(String vehicleID, Customer customerLoggedIn) {
+    Vehicle dataVehicle = getVehicleById(vehicleID);
+    List<ItemService> services = new ArrayList<>();
+    List<ItemService> servicesByVehicleType = getServicesByVehicleType(dataVehicle.getVehicleType());
+    boolean isService = true;
+    String member = customerLoggedIn instanceof MemberCustomer ? "Member" : "Non Member";
+    String payment = "Cash";
+
+    PrintService.showAllServices("List Data Service", servicesByVehicleType);
+    do {
+      String serviceID = Validation.validasiServiceId("Silahkan Masukan Service ID: ", "Service yang dicari tidak tersedia", Validation.regexID, services);
+      services.add(getServiceById(serviceID));
+      isService = Validation.validasiService("Ingin Pilih Service Yang Lain (Y/T)? ", member);
+    } while (isService);
+
+    if (member.equalsIgnoreCase("Member")) {
+      payment = Validation.validasiInput("Silahkan Pilih Metode Pembayaran (Saldo Coin atau Cash): ", "Input tidak dimengerti!", "^(?i)(Saldo Coin|Cash)$");
+    }
+
+    double totalPaymentService = 0;
+    for (ItemService item : services) {
+      totalPaymentService += item.getPrice();
+    }
+
+    // menambahkan data order ke list data order
+    BookingOrder order = new BookingOrder(Util.generateBookingId(), customerLoggedIn, services, payment, totalPaymentService);
+    MenuService.listBookingOrder.add(order);
+    // jika metode pembayaran menggunakan saldo coin, saldo akan dikurangi dengan total pembayaran
+    if (payment.equalsIgnoreCase("Saldo Coin")) {
+      ((MemberCustomer) customerLoggedIn).setSaldoCoin(((MemberCustomer) customerLoggedIn).getSaldoCoin() - order.getTotalPayment());
+    }
+
+    System.out.println("\nBooking Berhasil");
+    System.out.println("Total Harga Service: " + Util.formatCurrency(order.getTotalServicePrice()));
+    System.out.println("Total Pembayaran: " + Util.formatCurrency(order.getTotalPayment()));
+    System.out.println();
+  }
+
+  public static List<ItemService> getServicesByVehicleType(String vehicleType) {
+    List<ItemService> services = new ArrayList<>();
+
+    for (ItemService item : MenuService.listAllItemService) {
+      if (item.getVehicleType().equalsIgnoreCase(vehicleType)) {
+        services.add(item);
+      }
+    }
+    return services;
+  }
+
+  public static ItemService getServiceById(String serviceID){
+    return MenuService.listAllItemService.stream().filter(service -> service.getServiceId().equalsIgnoreCase(serviceID)).findFirst().orElse(null);
+  }
+
+  public static Vehicle getVehicleById(String vehicleID) {
+    return MenuService.customerLoggedIn.getVehicles().stream()
+            .filter(vehicle -> vehicle.getVehiclesId().equalsIgnoreCase(vehicleID))
+            .findFirst()
+            .orElse(null);
+  }
 	
 	//Top Up Saldo Coin Untuk Member Customer
 	

@@ -3,7 +3,9 @@ package com.bengkel.booking.services;
 import java.util.List;
 
 import com.bengkel.booking.models.Car;
+import com.bengkel.booking.models.ItemService;
 import com.bengkel.booking.models.Vehicle;
+import com.bengkel.booking.util.Util;
 
 public class PrintService {
 
@@ -49,7 +51,23 @@ public class PrintService {
 
 
 	}
-	
+
+
+	public static void showAllServices(String title, List<ItemService> listServices) {
+		int number = 1;
+		String formatTable = "| %-4s | %-14s | %-15s | %-15s | %-10s | %n";
+		System.out.println("=========================================================================");
+		System.out.format("| %-72s | %n", title);
+		System.out.println("=========================================================================");
+		System.out.printf(formatTable, "No", "Service ID", "Nama Service", "Tipe Kendaraan", "Harga");
+		System.out.println("=========================================================================");
+		for (ItemService service : listServices) {
+			System.out.format(formatTable, number, service.getServiceId(), service.getServiceName(), service.getVehicleType(), Util.formatCurrency(service.getPrice()));
+			number++;
+		}
+		System.out.println("=========================================================================");
+
+	}
 	//Silahkan Tambahkan function print sesuai dengan kebutuhan.
 	
 }
