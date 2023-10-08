@@ -71,17 +71,17 @@ public class PrintService {
 
 	public static void showAllBookingInformation(String title, List<BookingOrder> listBookingOrder) {
 		int number = 1;
-		String formatTable = "| %-4s | %-15s | %-15s | %-15s | %-14s | %-14s | %-30s | %n";
-		System.out.println("=================================================================================================================================");
-		System.out.format("| %-125s | %n", title);
-		System.out.println("=================================================================================================================================");
+		String formatTable = "| %-4s | %-17s | %-15s | %-15s | %-14s | %-14s | %-30s | %n";
+		System.out.println("===================================================================================================================================");
+		System.out.format("| %-127s | %n", title);
+		System.out.println("===================================================================================================================================");
 		System.out.printf(formatTable, "No", "Booking ID", "Nama Customer", "Payment Method", "Total Service", "Total Payment", "List Service");
-		System.out.println("=================================================================================================================================");
+		System.out.println("===================================================================================================================================");
 		for (BookingOrder order : listBookingOrder) {
 			System.out.format(formatTable, number, order.getBookingId(), order.getCustomer().getName(), order.getPaymentMethod(), Util.formatCurrency(order.getTotalServicePrice()), Util.formatCurrency(order.getTotalPayment()), printServices(order.getServices()));
 			number++;
 		}
-		System.out.println("=================================================================================================================================");
+		System.out.println("===================================================================================================================================");
 
 	}
 

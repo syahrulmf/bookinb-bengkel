@@ -1,5 +1,7 @@
 package com.bengkel.booking.util;
 
+import com.bengkel.booking.services.MenuService;
+
 import java.text.DecimalFormat;
 
 public class Util {
@@ -12,7 +14,7 @@ public class Util {
   private static int bookingNumber = 1;
 
   public static String generateBookingId() {
-    return "Book-" + String.format("%03d", bookingNumber++);
+    return "Book-Cust-" + String.format("%03d", bookingNumber++) + MenuService.customerLoggedIn.getCustomerId().substring(4, 8);
   }
 
 }
