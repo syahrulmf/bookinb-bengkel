@@ -135,6 +135,21 @@ public class BengkelService {
   }
 	
 	//Top Up Saldo Coin Untuk Member Customer
+  public static void topUpSaldoCoin() {
+    System.out.println("Menu Top Up Saldo Coin");
+    Customer customer = MenuService.customerLoggedIn;
+    String member = customer instanceof MemberCustomer ? "Member" : "Non Member";
+
+    if (!member.equalsIgnoreCase("Member")) {
+      System.out.println("\nMaaf Fitur Ini Hanya Untuk Member Saja!!\n");
+    } else {
+      int input = Validation.validasiNumberWithRange("Masukan Besaran Top Up: ", "Inputan hanya berupa number!", Validation.regexNumber, Integer.MAX_VALUE, 1);
+      ((MemberCustomer) customer).setSaldoCoin(((MemberCustomer) customer).getSaldoCoin() + input);
+
+      System.out.println("\nBerhasil Top Up Sebesar Rp. " + Util.formatCurrency(input));
+      System.out.println("Saldo Anda Sekarang Adalah Rp. " + Util.formatCurrency(((MemberCustomer) customer).getSaldoCoin()));
+    }
+  }
 	
 	//Logout
 	

@@ -72,21 +72,23 @@ public class MenuService {
 				isLooping = Validation.validasiMenu("Inputkan 0 untuk kembali ke menu: ");
 				break;
 
-				case 3:
-					//panggil fitur Top Up Saldo Coin
-					break;
+			case 3:
+				//panggil fitur Top Up Saldo Coin
+				BengkelService.topUpSaldoCoin();
+				isLooping = Validation.validasiMenu("Inputkan 0 untuk kembali ke menu: ");
+				break;
 
-				case 4:
-					//panggil fitur Informasi Booking Order
-					PrintService.showAllBookingInformation("Informasi Booking Order", listBookingOrder);
-					isLooping = Validation.validasiMenu("Inputkan 0 untuk kembali ke menu: ");
-					break;
+			case 4:
+				//panggil fitur Informasi Booking Order
+				PrintService.showAllBookingInformation("Informasi Booking Order", listBookingOrder);
+				isLooping = Validation.validasiMenu("Inputkan 0 untuk kembali ke menu: ");
+				break;
 
 			case 0:
 				System.out.println("\nBerhasil Logout...\n");
 				isLooping = false;
 				customerLoggedIn = null;
-				listBookingOrder = null;
+				listBookingOrder.clear();
 				break;
 
 			default:
@@ -95,9 +97,5 @@ public class MenuService {
 				break;
 			}
 		} while (isLooping);
-		
-		
 	}
-	
-	//Silahkan tambahkan kodingan untuk keperluan Menu Aplikasi
 }
