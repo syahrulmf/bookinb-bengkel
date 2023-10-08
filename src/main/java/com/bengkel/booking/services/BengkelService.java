@@ -152,5 +152,10 @@ public class BengkelService {
   }
 	
 	//Logout
+  public static void logout() {
+    System.out.println("\nBerhasil Logout...\n");
+    MenuService.customerLoggedIn = null;
+    MenuService.listBookingOrder.clear();
+  }
 	
 }

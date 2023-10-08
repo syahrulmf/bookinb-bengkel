@@ -85,10 +85,8 @@ public class MenuService {
 				break;
 
 			case 0:
-				System.out.println("\nBerhasil Logout...\n");
+				BengkelService.logout();
 				isLooping = false;
-				customerLoggedIn = null;
-				listBookingOrder.clear();
 				break;
 
 			default:
