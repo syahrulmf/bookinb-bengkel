@@ -98,15 +98,13 @@ public class Validation {
 		return input;
 	}
 
-	private static int numberServiceOrder = 1;
-	public static boolean validasiService(String question, String member) {
+	public static boolean validasiService(String question, String member, int serviceSize) {
 		boolean isLooping = false;
 
-		if (member.equalsIgnoreCase("Member") && numberServiceOrder != MenuService.customerLoggedIn.getMaxNumberOfService()) {
+		if (member.equalsIgnoreCase("Member") && serviceSize != MenuService.customerLoggedIn.getMaxNumberOfService()) {
 			String pilihan = validasiInput(question, "Hanya menerima input Y/T!", "^(?i)(Y|T)$");
 			if (pilihan.equalsIgnoreCase("Y")) {
 				isLooping = true;
-				numberServiceOrder++;
 			}
 		}
 

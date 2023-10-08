@@ -12,7 +12,7 @@ public class Util {
   private static int bookingNumber = 1;
 
   public static String generateBookingId() {
-    return "Rsv-" + String.format("%03d", bookingNumber++);
+    return "Book-" + String.format("%03d", bookingNumber++);
   }
 
 }

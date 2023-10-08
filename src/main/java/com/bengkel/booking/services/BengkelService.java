@@ -86,7 +86,7 @@ public class BengkelService {
     do {
       String serviceID = Validation.validasiServiceId("Silahkan Masukan Service ID: ", "Service yang dicari tidak tersedia", Validation.regexID, services);
       services.add(getServiceById(serviceID));
-      isService = Validation.validasiService("Ingin Pilih Service Yang Lain (Y/T)? ", member);
+      isService = Validation.validasiService("Ingin Pilih Service Yang Lain (Y/T)? ", member, services.size());
     } while (isService);
 
     if (member.equalsIgnoreCase("Member")) {
